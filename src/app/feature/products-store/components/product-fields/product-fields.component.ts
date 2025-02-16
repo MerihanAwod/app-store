@@ -30,6 +30,46 @@ import { shareReplay } from 'rxjs/internal/operators/shareReplay';
 import { ProductsActions } from '../../store/product.action';
 import { CategoriesPipe } from '../../pages/products-list/pipes/categories.pipe';
 import { FirebaseService } from '@store-app/core/services/firebase/firebase.service';
+// src/app/feature/products-store/components/products-list/products-list.component.ts
+import { Component, OnInit } from '@angular/core';
+import { ProductsGqlService } from '../../services/products-gql.service';
+import { IProduct } from '../../models/interfaces/product.interface';
+
+@Component({
+  selector: 'app-products-list',
+  template: `
+    <div *ngIf="products">
+      <ul>
+        <li *ngFor="let product of products">
+          {{ product.name }} - {{ product.price }}
+        </li>
+      </ul>
+    </div>
+  `,
+  styles: []
+})
+export class ProductsListComponent implements OnInit {
+  products: Product[] | undefined = []; // Initialize as empty array
+
+  constructor(private productsGqlService: ProductsGqlService) { } // Inject the service
+
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productsGqlService.getProducts().subscribe({
+      next: (products) => {
+        this.products = products;
+      },
+      error: (error) => {
+        console.error("Error fetching products:", error);
+        // Handle error, e.g., display a message to the user
+      }
+    });
+  }
+}
+
 @Component({
   selector: 'app-product-fields',
   standalone: true,

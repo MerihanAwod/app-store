@@ -7,6 +7,36 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ChipComponent } from '../../../../shared/components/chip/chip.component';
 import { ICONS } from '../../../../core/models/icons/icon.const';
 
+// src/app/feature/products-store/components/product-card/product-card.component.ts
+import { Component, OnInit, Input } from '@angular/core';
+import { ProductsGqlService } from '../../services/products-gql.service';
+import { IProduct } from '../../models/interfaces/product.interface';
+
+@Component({
+  selector: 'app-product-card',
+  template: `
+    <div *ngIf="product">  <h3>{{ product.name }}</h3>
+      <p>{{ product.price }}</p>
+      </div>
+  `,
+  styles: []
+})
+export class ProductCardComponent implements OnInit {
+  @Input() product: Product | undefined; // If you're receiving product data as input
+  // OR
+  // product: Product | undefined;  // If you're fetching product details
+
+  constructor(private productsGqlService: ProductsGqlService) { } // Inject the service
+
+  ngOnInit(): void {
+    // If you're fetching product details based on an ID or something
+    // const productId = '123'; // Get the product ID somehow (e.g., from input)
+    // this.productsGqlService.getProductById(productId).subscribe(product => {
+    //   this.product = product;
+    // });
+  }
+}
+
 @Component({
   selector: 'product-card',
   standalone: true,
