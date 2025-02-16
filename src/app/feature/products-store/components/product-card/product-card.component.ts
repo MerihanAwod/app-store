@@ -7,11 +7,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ChipComponent } from '../../../../shared/components/chip/chip.component';
 import { ICONS } from '../../../../core/models/icons/icon.const';
 
-// src/app/feature/products-store/components/product-card/product-card.component.ts
+// gql
 import { Component, OnInit, Input } from '@angular/core';
 import { ProductsGqlService } from '../../services/products-gql.service';
 import { IProduct } from '../../models/interfaces/product.interface';
-
+/*
 @Component({
   selector: 'app-product-card',
   template: `
@@ -36,6 +36,7 @@ export class ProductCardComponent implements OnInit {
     // });
   }
 }
+  */
 
 @Component({
   selector: 'product-card',

@@ -1,4 +1,4 @@
-// src/app/graphql.module.ts
+// gql
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
@@ -14,7 +14,7 @@ import { InMemoryCache } from '@apollo/client/core';
         return {
           cache: new InMemoryCache(),
           link: httpLink.create({
-            uri: 'http://localhost:5000/graphql', // Your GraphQL endpoint
+            uri: 'http://localhost:5000/graphql', // Your GraphQL endpoint #TODO
           }),
         };
       },

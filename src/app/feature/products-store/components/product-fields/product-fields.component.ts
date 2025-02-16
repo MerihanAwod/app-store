@@ -30,11 +30,11 @@ import { shareReplay } from 'rxjs/internal/operators/shareReplay';
 import { ProductsActions } from '../../store/product.action';
 import { CategoriesPipe } from '../../pages/products-list/pipes/categories.pipe';
 import { FirebaseService } from '@store-app/core/services/firebase/firebase.service';
-// src/app/feature/products-store/components/products-list/products-list.component.ts
+// gql
 import { Component, OnInit } from '@angular/core';
 import { ProductsGqlService } from '../../services/products-gql.service';
 import { IProduct } from '../../models/interfaces/product.interface';
-
+/*
 @Component({
   selector: 'app-products-list',
   template: `
@@ -69,6 +69,7 @@ export class ProductsListComponent implements OnInit {
     });
   }
 }
+  */
 
 @Component({
   selector: 'app-product-fields',

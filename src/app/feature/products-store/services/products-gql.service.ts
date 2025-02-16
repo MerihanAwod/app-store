@@ -11,7 +11,7 @@ const GET_PRODUCTS = gql`
       id
       name
       price
-      # ... other fields to be defined and confirmed with Ayman
+      # ... other fields to be defined and confirmed with Ayman #TODO
     }
   }
 `;
