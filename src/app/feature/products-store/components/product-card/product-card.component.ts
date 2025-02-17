@@ -6,6 +6,32 @@ import { SvgIconComponent } from '../../../../shared/components/svg-icon/svg-ico
 import { TranslateModule } from '@ngx-translate/core';
 import { ChipComponent } from '../../../../shared/components/chip/chip.component';
 import { ICONS } from '../../../../core/models/icons/icon.const';
+/*
+// gql
+import { ProductsGqlService } from '../../services/products-gql.service';
+import { Component, inject, input, InputSignal, OnInit, Input } from '@angular/core';
+
+export class ProductCardComponent implements OnInit {
+  product: IProduct | undefined; // Property to hold the product data
+  @Input() productId: number | undefined; // Input for product ID
+
+  constructor(private productsGqlService: ProductsGqlService) { } // Inject the service
+
+  ngOnInit(): void {
+    if (this.productId) {
+      this.productsGqlService.getProductById(this.productId).subscribe({
+        next: (product) => {
+          this.product = product; // Update the component's product property
+        },
+        error: (error) => {
+          console.error("Error fetching product:", error);
+          // Handle error (e.g., display a message)
+        }
+      });
+    }
+  }
+}
+  */
 
 @Component({
   selector: 'product-card',
