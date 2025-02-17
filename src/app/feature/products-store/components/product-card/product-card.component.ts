@@ -6,12 +6,12 @@ import { SvgIconComponent } from '../../../../shared/components/svg-icon/svg-ico
 import { TranslateModule } from '@ngx-translate/core';
 import { ChipComponent } from '../../../../shared/components/chip/chip.component';
 import { ICONS } from '../../../../core/models/icons/icon.const';
-
-// gql
-import { Component, OnInit, Input } from '@angular/core';
-import { ProductsGqlService } from '../../services/products-gql.service';
-import { IProduct } from '../../models/interfaces/product.interface';
 /*
+// gql
+import { ProductsGqlService } from '../../services/products-gql.service';
+import { Component, inject, input, InputSignal, OnInit, Input } from '@angular/core';
+
+
 @Component({
   selector: 'app-product-card',
   template: `

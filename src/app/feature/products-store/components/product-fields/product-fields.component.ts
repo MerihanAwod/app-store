@@ -30,11 +30,10 @@ import { shareReplay } from 'rxjs/internal/operators/shareReplay';
 import { ProductsActions } from '../../store/product.action';
 import { CategoriesPipe } from '../../pages/products-list/pipes/categories.pipe';
 import { FirebaseService } from '@store-app/core/services/firebase/firebase.service';
-// gql
-import { Component, OnInit } from '@angular/core';
-import { ProductsGqlService } from '../../services/products-gql.service';
-import { IProduct } from '../../models/interfaces/product.interface';
 /*
+import { OnInit } from '@angular/core';
+import { ProductsGqlService } from '../../services/products-gql.service';
+
 @Component({
   selector: 'app-products-list',
   template: `

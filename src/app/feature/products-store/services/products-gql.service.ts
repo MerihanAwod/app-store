@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { gql } from '@apollo/client';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Product } from '../models/interfaces/product'; // Import your Product interface
+import { IProduct } from '../models/interfaces/product.interface';
 
 const GET_PRODUCTS = gql`
   query GetProducts {
@@ -22,7 +22,7 @@ const GET_PRODUCTS = gql`
 export class ProductsGqlService {
   constructor(private apollo: Apollo) {}
 
-  getProducts(): Observable<Product[]> {
+  getProducts(): Observable<IProduct[]> {
     return this.apollo.watchQuery({ query: GET_PRODUCTS })
       .valueChanges.pipe(map((result: any) => result.data.products));
   }
