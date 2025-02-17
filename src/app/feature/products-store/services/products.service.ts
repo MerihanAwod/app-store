@@ -20,9 +20,22 @@ export class ProductsService {
   private _httpClient: HttpClient = inject(HttpClient);
 
   public getProducts(): Observable<IProductListResponse> {
-    return this._httpClient.get<IProductListResponse>(
-      environment.fakeStoreApi + `/products`
-    );
+    return this._httpClient
+      .get<IProductListResponse>(environment.fakeStoreApi + `/products`)
+      .pipe(
+        map((m) => {
+          return {
+            ...m,
+            products: m.products.map((product) => ({
+              ...product,
+              rating: {
+                rate: parseFloat((Math.random() * (5 - 1) + 1).toFixed(1)),
+                count: Math.floor(Math.random() * 5000) + 1,
+              },
+            })),
+          };
+        })
+      );
   }
 
   public getProductDetails(productId: string): Observable<IProduct> {
