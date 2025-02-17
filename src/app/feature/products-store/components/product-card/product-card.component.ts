@@ -11,29 +11,24 @@ import { ICONS } from '../../../../core/models/icons/icon.const';
 import { ProductsGqlService } from '../../services/products-gql.service';
 import { Component, inject, input, InputSignal, OnInit, Input } from '@angular/core';
 
-
-@Component({
-  selector: 'app-product-card',
-  template: `
-    <div *ngIf="product">  <h3>{{ product.name }}</h3>
-      <p>{{ product.price }}</p>
-      </div>
-  `,
-  styles: []
-})
 export class ProductCardComponent implements OnInit {
-  @Input() product: Product | undefined; // If you're receiving product data as input
-  // OR
-  // product: Product | undefined;  // If you're fetching product details
+  product: IProduct | undefined; // Property to hold the product data
+  @Input() productId: number | undefined; // Input for product ID
 
   constructor(private productsGqlService: ProductsGqlService) { } // Inject the service
 
   ngOnInit(): void {
-    // If you're fetching product details based on an ID or something
-    // const productId = '123'; // Get the product ID somehow (e.g., from input)
-    // this.productsGqlService.getProductById(productId).subscribe(product => {
-    //   this.product = product;
-    // });
+    if (this.productId) {
+      this.productsGqlService.getProductById(this.productId).subscribe({
+        next: (product) => {
+          this.product = product; // Update the component's product property
+        },
+        error: (error) => {
+          console.error("Error fetching product:", error);
+          // Handle error (e.g., display a message)
+        }
+      });
+    }
   }
 }
   */

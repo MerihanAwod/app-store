@@ -34,19 +34,7 @@ import { FirebaseService } from '@store-app/core/services/firebase/firebase.serv
 import { OnInit } from '@angular/core';
 import { ProductsGqlService } from '../../services/products-gql.service';
 
-@Component({
-  selector: 'app-products-list',
-  template: `
-    <div *ngIf="products">
-      <ul>
-        <li *ngFor="let product of products">
-          {{ product.name }} - {{ product.price }}
-        </li>
-      </ul>
-    </div>
-  `,
-  styles: []
-})
+
 export class ProductsListComponent implements OnInit {
   products: Product[] | undefined = []; // Initialize as empty array
 
