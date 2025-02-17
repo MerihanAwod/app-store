@@ -2,7 +2,7 @@ import {
   ApplicationConfig,
   provideZoneChangeDetection,
   isDevMode,
-  importProvidersFrom,
+  importProvidersFrom, inject,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -24,6 +24,9 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { provideServiceWorker } from '@angular/service-worker';
+import { provideApollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient
@@ -54,6 +57,15 @@ export const appConfig: ApplicationConfig = {
     provideStorage(() => getStorage()), provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),
             registrationStrategy: 'registerWhenStable:30000'
-          })
+          }), provideHttpClient(), provideApollo(() => {
+      const httpLink = inject(HttpLink);
+
+      return {
+        link: httpLink.create({
+          uri: '<%= endpoint %>',
+        }),
+        cache: new InMemoryCache(),
+      };
+    })
   ],
 };
