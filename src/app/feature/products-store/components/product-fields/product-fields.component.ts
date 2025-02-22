@@ -3,6 +3,7 @@ import {
   Component,
   Inject,
   inject,
+  OnInit,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -49,7 +50,7 @@ import { FirebaseService } from '@store-app/core/services/firebase/firebase.serv
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductFieldsComponent {
+export class ProductFieldsComponent implements OnInit {
   // Injects
   private readonly _dialog = inject(MatDialog);
   private _productDialogRef = inject(MatDialogRef<ProductFieldsComponent>);
@@ -59,7 +60,7 @@ export class ProductFieldsComponent {
   // Observables
   public CategoriesList$ = this._store.select(CategoriesSelector).pipe(
     tap((t) => {
-      !t.length && this._dispatchProductCategories();
+      // !t.length && this._dispatchProductCategories();
     }),
     shareReplay(1)
   );
@@ -85,16 +86,18 @@ export class ProductFieldsComponent {
     this.dialogAction.set(data.action);
     data?.product && this._setFormFields(data?.product);
   }
+  ngOnInit(): void {
+    this._dispatchProductCategories();
+  }
 
   private _setFormFields(product: IProduct) {
-
     this.productForm.setValue({
       [PRODUCT_FIELD.title]: product.title,
       [PRODUCT_FIELD.price]: String(product.price),
       [PRODUCT_FIELD.description]: product.description,
       [PRODUCT_FIELD.category]: product.category,
       [PRODUCT_FIELD.image]: product.image,
-      [PRODUCT_FIELD.rating]: String(product?.rating?.rate)
+      [PRODUCT_FIELD.rating]: String(product?.rating?.rate),
     });
   }
 
