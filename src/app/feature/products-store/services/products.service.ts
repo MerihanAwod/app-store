@@ -56,7 +56,7 @@ export class ProductsService {
       .pipe(map((result) => result.data.getProducts));
   }
 
-  public getProductDetails(productId: string): Observable<IProduct> {
+  public getProductDetails(productId: number): Observable<IProduct> {
     return this._apollo
       .query<{ getProduct: IProduct }>({
         query: gql`

@@ -93,7 +93,7 @@ export class ProductsEffects {
           );
         } else {
           // If not cached, make API call
-          return this._productsService.getProductDetails(action.payload).pipe(
+          return this._productsService.getProductDetails(+action.payload).pipe(
             map((response) => {
               // Cache the newly fetched product details
               const cachedProductDetails = new Map(cachedDetails);
