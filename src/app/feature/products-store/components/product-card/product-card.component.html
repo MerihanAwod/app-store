@@ -2,7 +2,7 @@
   <div class="product-thumbnail d-flex justify-content-center w-100 rounded-xl">
     <img class="" [ngSrc]="product().image" width="200" height="180"  loading="lazy">
     <span class="product-rate-count rounded-xl">
-      <span class="rate"> {{ product()?.rating?.rate }}</span>
+      <span class="rate"> {{ product()?.rating ?? 0 }}</span>
       <svg-icon [icon]="ICONS.star" [size]="1"></svg-icon>
       <span class="count"> {{ "(" + product()?.rating?.count + ")" }}</span>
     </span>

@@ -70,9 +70,14 @@ export const ProductsReducer = createReducer(
 
   // <---- CATEGORIES LIST ---->
   on(ProductsActions.gET_CATEGORY_LIST_SUCCESS, (state, { payload }) => {
+    console.log('payload', payload);
+
     return {
       ...state,
-      categories: ['all', ...payload],
+      categories: [
+        { title: 'all' },
+        ...(Array.isArray(payload) ? payload : []),
+      ],
       error: null,
     };
   }),
@@ -101,17 +106,11 @@ export const ProductsReducer = createReducer(
 
   // <---- DELETE PRODUCT ---->
   on(ProductsActions.dELETE_PRODUCT_SUCCESS, (state, { payload }) => {
-    const { id, index } = payload;
-
     let updatedList = state.list;
 
-    if (id) {
-      // Remove by id if id is provided
-      updatedList = (state.list || []).filter((product) => product?.id !== id);
-    } else if (index !== undefined) {
-      // Remove by index if no id is provided
-      updatedList = (state.list || []).filter((_, i) => i !== index);
-    }
+    // Remove by id if id is provided
+    updatedList = (state.list || []).filter((product) => product?.id !== payload.id);
+
     return {
       ...state,
       list: [...(updatedList || [])],

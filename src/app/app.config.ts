@@ -13,6 +13,7 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import {
   HttpClient,
+  HttpHeaders,
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
@@ -32,7 +33,6 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient
 ) => new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -50,22 +50,42 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
       }),
-  
     ]),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          }), provideHttpClient(), provideApollo(() => {
+    provideStorage(() => getStorage()),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
+    provideHttpClient(),
+    provideApollo(() => {
       const httpLink = inject(HttpLink);
 
       return {
         link: httpLink.create({
-          uri: '<%= endpoint %>',
+          uri: environment.graphQl,
+          headers: new HttpHeaders({
+            'X-CSRFToken': getCsrfToken()  // Function to fetch CSRF token
+          })
         }),
         cache: new InMemoryCache(),
       };
-    })
+    }),
   ],
 };
+
+function getCsrfToken(): string  {
+  const name = 'csrftoken=';
+  const cookies = document.cookie.split(';');
+  for (let cookie of cookies) {
+    while (cookie.charAt(0) === ' ') {
+      cookie = cookie.substring(1);
+    }
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+  return '';
+}
+

@@ -137,6 +137,8 @@ export class ProductsListComponent implements OnInit {
   }
 
   public _dispatchProductCategories(): void {
+    console.log("_dispatchProductCategories");
+    
     this._store.dispatch(ProductsActions.gET_CATEGORY_LIST());
   }
 
@@ -155,7 +157,7 @@ export class ProductsListComponent implements OnInit {
     this._store
       .select(ProductsListSelector)
       .pipe(
-        filter((f) => !!f?.length),
+        // filter((f) => !!f?.length),
         tap(() => {
           this.productList.set(null);
           this.productListShimmer.set(false);

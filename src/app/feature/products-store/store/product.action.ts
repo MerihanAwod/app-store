@@ -1,6 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { IAddProduct, IDeleteProduct, IProduct } from '../models/interfaces/product.interface';
+import {
+  IAddProduct,
+  IDeleteProduct,
+  IProduct,
+} from '../models/interfaces/product.interface';
 import { IPagination } from '../models/interfaces/pagination.interface';
 
 export enum ProductsActionEnum {
@@ -70,7 +74,7 @@ export const ProductsActions = createActionGroup({
     // CATEGORY LIST
     [ProductsActionEnum.GET_CATEGORY_LIST]: emptyProps(),
     [ProductsActionEnum.GET_CATEGORY_LIST_SUCCESS]: props<{
-      payload: Array<string>;
+      payload: Array<{ title: string }>;
     }>(),
     [ProductsActionEnum.GET_CATEGORY_LIST_FAIL]: props<{
       error?: HttpErrorResponse;
