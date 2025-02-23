@@ -48,7 +48,7 @@ export class ProductDetailsComponent {
 
   // Publix
   public ICONS = ICONS;
-  public productDetails: WritableSignal<IProduct | null> = signal(null);
+  public productDetails: WritableSignal<any | null> = signal(null);
 
   ngOnInit(): void {
     this._getProductId();

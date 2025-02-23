@@ -4,7 +4,7 @@
     <span class="product-rate-count rounded-xl">
       <span class="rate"> {{ product()?.rating ?? 0 }}</span>
       <svg-icon [icon]="ICONS.star" [size]="1"></svg-icon>
-      <span class="count"> {{ "(" + (+product()?.rating!) * 5 + ")" }}</span>
+      <span class="count"> {{ "(" + (product()?.reviews!)+ ")" }}</span>
     </span>
   </div>
   <div class="product-details d-flex flex-column gap-1 p-2">

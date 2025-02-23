@@ -36,10 +36,10 @@
           <div class="product-details d-flex flex-column gap-1 p-2">
             <strong class="product-title">{{ product?.title }}</strong>
             <span class="product-rate-count rounded-xl">
-              <span class="rate"> {{ product?.rating?.rate }}</span>
+              <span class="rate"> {{ product?.rating }}</span>
               <svg-icon [icon]="ICONS.star" [size]="1"></svg-icon>
               <span class="count">
-                {{ "(" + product?.rating?.count + ")" }}</span
+                {{ "(" + product?.reviews + ")" }}</span
               >
             </span>
             <small class="product-description">{{
@@ -47,7 +47,7 @@
             }}</small>
             <div class="product-data d-flex justify-content-between">
               <span class="product-caterogry">
-                <chip colorHex="#7a889c">{{ product?.category }}</chip>
+                <chip colorHex="#7a889c">{{  product?.collection?.title}}</chip>
               </span>
               <strong class="product-price">
                 {{ product?.price | currency : "USD" }}</strong
