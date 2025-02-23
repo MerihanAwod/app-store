@@ -12,7 +12,7 @@
     <small class="product-description">{{ product().description }}</small>
     <div class="product-data d-flex justify-content-between">
       <span class="product-caterogry">
-        <chip colorHex="#7a889c">{{ product().category }}</chip>
+        <chip colorHex="#7a889c">{{ product()?.collection?.title }}</chip>
       </span>
       <strong class="product-price">
         {{ product().price | currency : "USD" }}</strong

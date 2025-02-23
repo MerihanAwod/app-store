@@ -24,7 +24,7 @@ import { ICONS } from '../../../../core/models/icons/icon.const';
 export class ProductCardComponent {
   // Inject
   private _router: Router = inject(Router);
-  public product: InputSignal<IProduct> = input.required<IProduct>();
+  public product: InputSignal<any> = input.required<any>();
   // Public
   public ICONS = ICONS;
 
