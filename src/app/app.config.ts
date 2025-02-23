@@ -2,8 +2,7 @@ import {
   ApplicationConfig,
   provideZoneChangeDetection,
   isDevMode,
-  importProvidersFrom,
-  inject,
+  importProvidersFrom, inject,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
