@@ -27,24 +27,28 @@ export class ProductsEffects {
   getProductsList$ = createEffect(() =>
     this._actions$.pipe(
       ofType(ProductsActions.gET_PRODUCT_LIST),
-      switchMap((action) => {
-        return this._productsService.getProducts().pipe(
-          tap((t) => {
-            console.log('RESPONSE FROM SERVIE', t);
-          }),
-          switchMap((response) =>
-            of(
-              ProductsActions.gET_PRODUCT_LIST_SUCCESS({
-                payload: response,
+      switchMap(() =>
+        this._productsService.getProducts().pipe(
+          map((response) => {
+            const updatedResponse = response.map(
+              (product: { rating: number }) => ({
+                ...product,
+                reviews:
+                  product.rating *
+                  (Math.floor(Math.random() * (25 - 3 + 1)) + 3),
               })
-            )
-          ),
+            );
+
+            return ProductsActions.gET_PRODUCT_LIST_SUCCESS({
+              payload: updatedResponse,
+            });
+          }),
           catchError((error) => {
             this._genericError();
             return of(ProductsActions.gET_PRODUCT_LIST_FAIL({ error }));
           })
-        );
-      })
+        )
+      )
     )
   );
 

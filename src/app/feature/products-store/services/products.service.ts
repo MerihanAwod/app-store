@@ -23,7 +23,7 @@ export class ProductsService {
   private _apollo: Apollo = inject(Apollo);
 
   public getProducts(): Observable<any> {
-    return of(MOCK_DATA.getProducts.data.getProducts);
+    // return of(MOCK_DATA.getProducts.data.getProducts);
     return this._apollo
       .query<{ getProducts: any }>({
         query: gql`
@@ -60,7 +60,7 @@ export class ProductsService {
     return this._apollo
       .query<{ getProduct: IProduct }>({
         query: gql`
-          query getProduct($id: ID!) {
+          query getProduct($id: Int!) {
             getProduct(id: $id) {
               brand
               collection {
@@ -89,7 +89,7 @@ export class ProductsService {
   }
 
   public getCategories(): Observable<any> {
-    return of(MOCK_DATA.getCategories.data.getCollections);
+    // return of(MOCK_DATA.getCategories.data.getCollections);
 
     return this._apollo
       .query<{ getCollections: any }>({
