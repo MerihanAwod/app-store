@@ -12,6 +12,7 @@ import { IAppState } from '@store-app/store/app.store';
 import { CashedProductDetailsSelector } from './product.selector';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { tap } from 'rxjs';
 
 @Injectable()
 export class ProductsEffects {
@@ -28,10 +29,13 @@ export class ProductsEffects {
       ofType(ProductsActions.gET_PRODUCT_LIST),
       switchMap((action) => {
         return this._productsService.getProducts().pipe(
+          tap((t) => {
+            console.log('RESPONSE FROM SERVIE', t);
+          }),
           switchMap((response) =>
             of(
               ProductsActions.gET_PRODUCT_LIST_SUCCESS({
-                payload: response.products,
+                payload: response,
               })
             )
           ),
@@ -112,10 +116,13 @@ export class ProductsEffects {
       ofType(ProductsActions.gET_CATEGORY_LIST),
       switchMap((action) => {
         return this._productsService.getCategories().pipe(
+          tap((t) => {
+            console.log('RESPONSE FROM SERVIE', t);
+          }),
           switchMap((response) =>
             of(
               ProductsActions.gET_CATEGORY_LIST_SUCCESS({
-                payload: response.categories,
+                payload: response,
               })
             )
           ),
@@ -157,7 +164,9 @@ export class ProductsEffects {
           switchMap((response) => {
             this._snackBarMessage('product.deleteSuccess');
             return of(
-              ProductsActions.dELETE_PRODUCT_SUCCESS({ payload: response })
+              ProductsActions.dELETE_PRODUCT_SUCCESS({
+                payload: action.payload,
+              })
             );
           }),
           catchError((error) => {

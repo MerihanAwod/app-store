@@ -4,10 +4,7 @@
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="productForm" class="row gap-2">
     <!-- Image  -->
-    <mat-form-field
-      class="col-xsmall-12  col-medium-12"
-      appearance="fill"
-    >
+    <mat-form-field class="col-xsmall-12 col-medium-12" appearance="fill">
       <ng-container *ngIf="productForm.get(PRODUCT_FIELD.image) as imageField">
         <div
           class="product-image-container rounded-xl p-2 d-flex flex-column justify-content-center text-center"
@@ -61,6 +58,15 @@
       <input [formControlName]="PRODUCT_FIELD.title" matInput type="text" />
     </mat-form-field>
 
+    <!-- Slug  -->
+    <mat-form-field
+      class="field col-xsmall-12 col-medium-5"
+      appearance="outline"
+    >
+      <mat-label>{{ "product.slug" | translate }}</mat-label>
+      <input [formControlName]="PRODUCT_FIELD.slug" matInput type="text" />
+    </mat-form-field>
+
     <!-- Price  -->
     <mat-form-field
       class="field col-xsmall-12 col-medium-5"
@@ -83,6 +89,43 @@
       </mat-select>
     </mat-form-field>
 
+    <!-- Model  -->
+    <mat-form-field
+      class="field col-xsmall-12 col-medium-5"
+      appearance="outline"
+    >
+      <mat-label>{{ "product.model" | translate }}</mat-label>
+      <input [formControlName]="PRODUCT_FIELD.model" matInput type="text" />
+    </mat-form-field>
+
+    <!-- Brand  -->
+    <mat-form-field
+      class="field col-xsmall-12 col-medium-5"
+      appearance="outline"
+    >
+      <mat-label>{{ "product.brand" | translate }}</mat-label>
+      <input [formControlName]="PRODUCT_FIELD.brand" matInput type="text" />
+    </mat-form-field>
+
+    <!-- Color -->
+    <mat-form-field
+      class="field col-xsmall-12 col-medium-5"
+      appearance="outline"
+    >
+      <mat-label>{{ "product.color" | translate }}</mat-label>
+      <mat-select [formControlName]="PRODUCT_FIELD.color">
+        <ng-container *ngFor="let color of colorList">
+          <mat-option
+            [value]="translateService.currentLang == 'en' ? color.en : color.ar"
+            >{{
+              translateService.currentLang == "en" ? color.en : color.ar
+            }}</mat-option
+          >
+        </ng-container>
+      </mat-select>
+      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+    </mat-form-field>
+
     <!-- Rating  -->
     <mat-form-field
       class="field col-xsmall-12 col-medium-5"
@@ -95,6 +138,33 @@
         type="number"
         max="5"
       />
+    </mat-form-field>
+
+    <!-- inventory  -->
+    <mat-form-field
+      class="field col-xsmall-12 col-medium-5"
+      appearance="outline"
+    >
+      <mat-label>{{ "product.inventoryNumber" | translate }}</mat-label>
+      <input
+        [formControlName]="PRODUCT_FIELD.inventory"
+        matInput
+        type="number"
+        max="200"
+      />
+    </mat-form-field>
+
+    <!-- popular -->
+    <mat-form-field
+      class="field col-xsmall-12 col-medium-5"
+      appearance="outline"
+    >
+      <mat-label>{{ "product.popular" | translate }}</mat-label>
+      <mat-select [formControlName]="PRODUCT_FIELD.popular">
+        <mat-option [value]="true">True</mat-option>
+        <mat-option [value]="false">False</mat-option>
+      </mat-select>
+      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
     </mat-form-field>
 
     <mat-form-field

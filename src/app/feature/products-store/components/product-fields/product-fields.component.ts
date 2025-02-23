@@ -17,7 +17,7 @@ import {
 import { CrudActions, PRODUCT_FIELD } from '../../models/const/product.cont';
 import { IProduct } from '../../models/interfaces/product.interface';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -56,6 +56,8 @@ export class ProductFieldsComponent implements OnInit {
   private _productDialogRef = inject(MatDialogRef<ProductFieldsComponent>);
   private _fb: FormBuilder = inject(FormBuilder);
   private _firebaseService: FirebaseService = inject(FirebaseService);
+  public translateService: TranslateService = inject(TranslateService);
+
   private _store: Store<IAppState> = inject(Store);
   // Observables
   public CategoriesList$ = this._store.select(CategoriesSelector).pipe(
@@ -72,8 +74,38 @@ export class ProductFieldsComponent implements OnInit {
     [PRODUCT_FIELD.category]: ['', [Validators.required]],
     [PRODUCT_FIELD.image]: ['', [Validators.required]],
     [PRODUCT_FIELD.rating]: ['', [Validators.required]],
+    [PRODUCT_FIELD.model]: ['', [Validators.required]],
+    [PRODUCT_FIELD.brand]: ['', [Validators.required]],
+    [PRODUCT_FIELD.color]: ['', [Validators.required]],
+    [PRODUCT_FIELD.slug]: ['', [Validators.required]],
+    [PRODUCT_FIELD.popular]: ['', [Validators.required]],
+    [PRODUCT_FIELD.inventory]: ['', [Validators.required]],
   });
 
+  public colorList = [
+    { en: "Red", ar: "أحمر" },
+    { en: "Blue", ar: "أزرق" },
+    { en: "Green", ar: "أخضر" },
+    { en: "Yellow", ar: "أصفر" },
+    { en: "Black", ar: "أسود" },
+    { en: "White", ar: "أبيض" },
+    { en: "Purple", ar: "أرجواني" },
+    { en: "Orange", ar: "برتقالي" },
+    { en: "Pink", ar: "وردي" },
+    { en: "Brown", ar: "بني" },
+    { en: "Gray", ar: "رمادي" },
+    { en: "Cyan", ar: "سماوي" },
+    { en: "Magenta", ar: "أرجواني محمر" },
+    { en: "Lime", ar: "ليموني" },
+    { en: "Olive", ar: "زيتي" },
+    { en: "Maroon", ar: "ماروني" },
+    { en: "Navy", ar: "كحلي" },
+    { en: "Teal", ar: "أزرق مخضر" },
+    { en: "Beige", ar: "بيج" },
+    { en: "Turquoise", ar: "فيروزي" },
+  ];
+
+  
   // Signals
   public dialogAction: WritableSignal<CrudActions | null> =
     signal<CrudActions | null>(null);
@@ -97,7 +129,13 @@ export class ProductFieldsComponent implements OnInit {
       [PRODUCT_FIELD.description]: product.description,
       [PRODUCT_FIELD.category]: product.category,
       [PRODUCT_FIELD.image]: product.image,
-      [PRODUCT_FIELD.rating]: String(product?.rating?.rate),
+      [PRODUCT_FIELD.rating]: String(product?.rating),
+      [PRODUCT_FIELD.model]: String(product?.model),
+      [PRODUCT_FIELD.brand]: String(product?.brand),
+      [PRODUCT_FIELD.color]: String(product?.color),
+      [PRODUCT_FIELD.slug]: String(product?.slug),
+      [PRODUCT_FIELD.popular]: String(product?.popular),
+      [PRODUCT_FIELD.inventory]: String(product?.inventory),
     });
   }
 

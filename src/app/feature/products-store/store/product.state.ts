@@ -4,7 +4,7 @@ export interface IProductsState {
   list: Array<IProduct> | null;
   productDetails: IProduct | null;
   cachedProductDetails: Map<string, IProduct>;
-  categories: Array<string>;
+  categories: Array<{ title: string }>;
   error: any;
 }
 

@@ -5,6 +5,8 @@ export interface IProductListResponse extends IResponse {
 }
 
 export interface IProduct {
+  slug(slug: any): string | null;
+  inventory(inventory: any): string | null;
   id: number;
   title: string;
   image: string;
@@ -20,7 +22,6 @@ export interface IProduct {
   rating?: IProductRating;
   quantity?: number;
 }
-
 
 export interface IAddProduct {
   title: string;
@@ -38,8 +39,7 @@ export interface IProductRating {
 }
 
 export interface IDeleteProduct {
-  id?: number;
-  index: number;
+  id: number;
 }
 
 export interface ICategoryResponse extends IResponse {

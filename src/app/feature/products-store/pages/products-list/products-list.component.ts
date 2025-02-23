@@ -137,6 +137,8 @@ export class ProductsListComponent implements OnInit {
   }
 
   public _dispatchProductCategories(): void {
+    console.log("_dispatchProductCategories");
+    
     this._store.dispatch(ProductsActions.gET_CATEGORY_LIST());
   }
 

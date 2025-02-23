@@ -12,6 +12,7 @@ import { environment } from '../../../../environments/production.environments';
 import { map, of } from 'rxjs';
 import { UrlQueryBuilder } from '@store-app/shared/utilis/url-query-builder';
 import { Apollo, gql } from 'apollo-angular';
+import { MOCK_DATA } from './mock-data';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,7 @@ export class ProductsService {
   private _apollo: Apollo = inject(Apollo);
 
   public getProducts(): Observable<any> {
+    return of(MOCK_DATA.getProducts.data.getProducts);
     return this._apollo
       .query<{ getProducts: any }>({
         query: gql`
@@ -86,7 +88,9 @@ export class ProductsService {
       .pipe(map((result) => result.data.getProduct));
   }
 
-  public getCategories(): Observable<ICategoryResponse> {
+  public getCategories(): Observable<any> {
+    return of(MOCK_DATA.getCategories.data.getCollections);
+
     return this._apollo
       .query<{ getCollections: any }>({
         query: gql`
@@ -100,7 +104,9 @@ export class ProductsService {
       .pipe(map((result) => result.data.getCollections));
   }
 
-  public getProductsByCategory(category: string): Observable<IProductListResponse> {
+  public getProductsByCategory(
+    category: string
+  ): Observable<IProductListResponse> {
     return this._apollo
       .query<{ getCollectionProducts: IProductListResponse }>({
         query: gql`
@@ -130,12 +136,11 @@ export class ProductsService {
           }
         `,
         variables: {
-          title: category, 
+          title: category,
         },
       })
       .pipe(map((result) => result.data.getCollectionProducts));
   }
-  
 
   public addProduct(product: any): Observable<IAddProduct> {
     return this._apollo
@@ -154,7 +159,6 @@ export class ProductsService {
             $popular: Boolean!
             $rating: Float!
             $slug: String!
-            $discount: Float!
           ) {
             addProduct(
               title: $title
@@ -169,7 +173,6 @@ export class ProductsService {
               popular: $popular
               rating: $rating
               slug: $slug
-              discount: $discount
             ) {
               id
               brand
@@ -180,9 +183,6 @@ export class ProductsService {
               title
               slug
               rating
-              promotion {
-                discount
-              }
               priceAfterDiscount
               price
               popular
@@ -207,39 +207,18 @@ export class ProductsService {
           popular: product.popular,
           rating: product.rating,
           slug: product.slug,
-          discount: product.discount, // Fixed missing field
         },
       })
       .pipe(map((result) => result.data!.addProduct));
   }
-  
 
   public deleteProduct(payload: IDeleteProduct): Observable<IDeleteProduct> {
     return this._apollo
       .mutate<{ deleteProduct: IDeleteProduct }>({
         mutation: gql`
-          mutation deleteProduct($id: ID!) {
+          mutation deleteProduct($id: Int!) {
             deleteProduct(id: $id) {
               id
-              brand
-              collection {
-                title
-              }
-              color
-              description
-              image
-              model
-              inventory
-              onSale
-              popular
-              price
-              priceAfterDiscount
-              promotion {
-                discount
-              }
-              rating
-              slug
-              title
             }
           }
         `,
@@ -249,7 +228,7 @@ export class ProductsService {
       })
       .pipe(map((result) => result.data!.deleteProduct)); // Return the actual deleted product
   }
-  
+
   public updateProduct(product: any): Observable<IProduct> {
     return this._apollo
       .mutate<{ updateProduct: IProduct }>({
@@ -307,20 +286,20 @@ export class ProductsService {
         `,
         variables: {
           id: product.id,
-          title: product.title || "Unknown Product", // Prevent empty strings
-          slug: product.slug || product.title.replace(/\s+/g, "-").toLowerCase(),
+          title: product.title || 'Unknown Product', // Prevent empty strings
+          slug:
+            product.slug || product.title.replace(/\s+/g, '-').toLowerCase(),
           rating: product.rating ?? 0, // Ensure it's a number
           price: product.price ?? 0,
           popular: product.popular ?? false, // Ensure boolean type
-          model: product.model || "Unknown Model",
+          model: product.model || 'Unknown Model',
           inventory: product.inventory ?? 0,
-          image: product.image || "default-image.jpg",
-          description: product.description || "No description provided",
-          color: product.color || "Not specified",
-          brand: product.brand || "No Brand",
+          image: product.image || 'default-image.jpg',
+          description: product.description || 'No description provided',
+          color: product.color || 'Not specified',
+          brand: product.brand || 'No Brand',
         },
       })
       .pipe(map((result) => result.data!.updateProduct));
   }
-  
 }
